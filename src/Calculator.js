@@ -7,7 +7,9 @@ const [secondNum,setSecondNum]=useState(0);
 const [choice,setChoice]=useState('');
 const [ans,setAns]=useState(0);
 const [operator,setOperator]=useState('');
+const [prev,setPrev]=useState([]);
 
+// TODO should we use effect or not
 useEffect(() => {
     console.log("in use effect");
     <h6>{firstNum} {operator} {secondNum} {ans}</h6>
@@ -41,6 +43,16 @@ const handleSubmit = (e) =>{
             setAns(parseFloat(firstNum)/parseFloat(secondNum));
             console.log(ans);
             break;
+    }
+
+    if(firstNum && secondNum && choice && ans && operator){
+        const record={id: new Date().getTime().toString(),firstNum,operator,secondNum,ans};
+        setPrev((prev) => {
+            return [...prev,record];
+        });
+    }
+    else{
+        console.log('empty values');
     }
 
 }
@@ -86,8 +98,16 @@ const handleSubmit = (e) =>{
                 <button type="submit">Submit</button>
 
                 <h3>ANS: {ans}</h3>
-                
             </form>
+            {
+                prev.map((record,index)=>{
+                    const {id,firstNum,operator,secondNum,ans}=record;
+                    return (
+                        <div key={id}>
+                            <h4>{firstNum} {operator} {secondNum} = {ans}</h4>
+                        </div>
+                    );
+                })}
         </div>
     </React.Fragment>;
 }
