@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-
+// In new calc
 const Calculator = () => {
 
 const [firstNum,setFirstNum]=useState(0);
@@ -10,10 +10,10 @@ const [operator,setOperator]=useState('');
 const [prev,setPrev]=useState([]);
 
 // TODO should we use effect or not
-useEffect(() => {
-    console.log("in use effect");
-    <h6>{firstNum} {operator} {secondNum} {ans}</h6>
-},[firstNum,secondNum,choice]);
+// useEffect(() => {
+//     console.log("in use effect");
+//     <h6>{firstNum} {operator} {secondNum} {ans}</h6>
+// },[firstNum,secondNum,choice]);
 
 const handleSubmit = (e) =>{
     e.preventDefault();
@@ -23,27 +23,25 @@ const handleSubmit = (e) =>{
         case 'add':
             setOperator("+");
             setAns(parseFloat(firstNum)+parseFloat(secondNum));
-            console.log(ans);
             break;
 
         case 'subtract':
             setOperator("-");
             setAns(parseFloat(firstNum)-parseFloat(secondNum));
-            console.log(ans);
             break;
         
         case 'product':
             setOperator("*")
             setAns(parseFloat(firstNum)*parseFloat(secondNum));
-            console.log(ans);
             break;
 
         case 'divide':
             setOperator("/");
             setAns(parseFloat(firstNum)/parseFloat(secondNum));
-            console.log(ans);
             break;
     }
+
+    console.log(ans);
 
     if(firstNum && secondNum && choice && ans && operator){
         const record={id: new Date().getTime().toString(),firstNum,operator,secondNum,ans};
