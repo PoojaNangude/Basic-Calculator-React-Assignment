@@ -1,3 +1,4 @@
+import { render } from '@testing-library/react';
 import React, {useState,useEffect} from 'react';
 // In new calc
 const Calculator = () => {
@@ -6,60 +7,47 @@ const [firstNum,setFirstNum]=useState(0);
 const [secondNum,setSecondNum]=useState(0);
 const [choice,setChoice]=useState('');
 const [ans,setAns]=useState(0);
-const [operator,setOperator]=useState('');
 const [prev,setPrev]=useState([]);
-
-// TODO should we use effect or not
-// useEffect(() => {
-//     console.log("in use effect");
-//     <h6>{firstNum} {operator} {secondNum} {ans}</h6>
-// },[firstNum,secondNum,choice]);
 
 const handleSubmit = (e) =>{
     e.preventDefault();
-    console.log(firstNum,secondNum,choice);
-
+    console.log('called before');
     switch(choice){
-        case 'add':
-            setOperator("+");
+        case '+':
             setAns(parseFloat(firstNum)+parseFloat(secondNum));
             break;
 
-        case 'subtract':
-            setOperator("-");
+        case '-':
             setAns(parseFloat(firstNum)-parseFloat(secondNum));
             break;
         
-        case 'product':
-            setOperator("*")
+        case '*':
             setAns(parseFloat(firstNum)*parseFloat(secondNum));
             break;
 
-        case 'divide':
-            setOperator("/");
+        case '/':
             setAns(parseFloat(firstNum)/parseFloat(secondNum));
             break;
     }
-
-    console.log(ans);
-
-    if(firstNum && secondNum && choice && ans && operator){
-        const record={id: new Date().getTime().toString(),firstNum,operator,secondNum,ans};
-        setPrev((prev) => {
-            return [...prev,record];
-        });
-    }
-    else{
-        console.log('empty values');
-    }
-
 }
 
+useEffect(()=>{
+    const record={id: new Date().getTime().toString(),firstNum,choice,secondNum,ans};
+    console.log(record);
+    setPrev((prev) => {
+        return [...prev,record];
+    });
+    console.log('in useeffect',ans);
+},[ans]);
 
-    return <React.Fragment>
+useEffect(()=>{
+    console.log('in useeffect',prev);
+},[prev]);
+
+    return (
         <div>
             <h1>Basic Calculator</h1>
-            <form onSubmit={handleSubmit}>
+            <form>
 
                 <div>
                     <label htmlFor="firstNum">Num 1 : </label>
@@ -86,28 +74,28 @@ const handleSubmit = (e) =>{
                 <br></br>
 
                 <div onChange={(e) =>setChoice(e.target.value)}>
-                    <input type="radio" value="add" name="choice" />Add
-                    <input type="radio" value="subtract" name="choice" />Subtract
-                    <input type="radio" value="product" name="choice" />Product
-                    <input type="radio" value="divide" name="choice" />Divide
+                    <input type="radio" value="+" name="choice" />Add
+                    <input type="radio" value="-" name="choice" />Subtract
+                    <input type="radio" value="*" name="choice" />Product
+                    <input type="radio" value="/" name="choice" />Divide
                 </div>
                 <br></br>
 
-                <button type="submit">Submit</button>
+                <button type="submit" onClick={handleSubmit}>Submit</button>
 
                 <h3>ANS: {ans}</h3>
             </form>
             {
                 prev.map((record,index)=>{
-                    const {id,firstNum,operator,secondNum,ans}=record;
+                    const {id,firstNum,choice,secondNum,ans}=record;
                     return (
                         <div key={id}>
-                            <h4>{firstNum} {operator} {secondNum} = {ans}</h4>
+                            <h4>{firstNum} {choice} {secondNum} = {ans}</h4>
                         </div>
                     );
                 })}
         </div>
-    </React.Fragment>;
+    );
 }
 
 export default Calculator;
