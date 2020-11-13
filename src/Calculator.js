@@ -31,6 +31,7 @@ const handleSubmit = (e) =>{
     }
 }
 
+
 useEffect(()=>{
     const record={id: new Date().getTime().toString(),firstNum,choice,secondNum,ans};
     console.log(record);
