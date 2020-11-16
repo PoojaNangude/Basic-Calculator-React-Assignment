@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React, {useState,useEffect} from 'react';
-// In basic calculator
+// In advanced calculator
 const Calculator = () => {
 
 const [firstNum,setFirstNum]=useState(0);
