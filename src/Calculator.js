@@ -46,11 +46,15 @@ const Calculator = () => {
     }
 
     const infixToPostfix = (exp) =>{
+
+        let separators = ["+","-","/","*",")","("];
+        let splitexp=exp.split(new RegExp("([" + separators.join("") + "])+"));
+        console.log(splitexp);
         let stack=[];
         let operators=['+','-','/','*'];
         let output='';
 
-        for(let chr of exp){
+        for(let chr of splitexp){
             if(!isNaN(chr)){output=output+chr+' ';}
 
             else
