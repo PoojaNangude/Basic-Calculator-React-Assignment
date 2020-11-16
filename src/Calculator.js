@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import React, {useState,useEffect} from 'react';
-// In advanced calculator
-//Does not handle brackets
+// In advanced bracket calculator
+//Trying to handle brackets
 const Calculator = () => {
 const [expression,setExpression]=useState('');
 const [ans,setAns]=useState(0);
