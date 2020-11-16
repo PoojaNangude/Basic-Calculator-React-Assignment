@@ -47,11 +47,11 @@ const Calculator = () => {
 
     const infixToPostfix = (exp) =>{
         let stack=[];
-        let opertors=[];
+        let operators=['+','-','/','*'];
         let output='';
 
         for(let chr of exp){
-            if(!isNaN(chr)){output=output+chr;}
+            if(!isNaN(chr)){output=output+chr+' ';}
 
             else
             if(chr==='('){stack.push(chr);}
@@ -59,66 +59,34 @@ const Calculator = () => {
             else
             if(chr===')'){
                 while(stack[stack.length-1] !== '('){
-                    output=output+stack.pop();
+                    // console.log(stack[stack.length-1]);
+                    output=output+(stack[stack.length-1])+' ';
+                    stack.pop();
                 }
                 stack.pop();
             }
 
-            // else
-            // if(precendence(chr)<=precendence(stack[stack.length-1])){
-            //     while(precendence(chr)<=precendence(stack[stack.length-1])){
-            //         output=output+stack.pop();
-            //     }
-            //     stack.push(chr);
-            // }
+            else
+            if(operators.includes(chr)){
+                if((precendence(chr)<=precendence(stack[stack.length-1])) && ((stack.length-1)!==-1)){
+                    while((precendence(chr)<=precendence(stack[stack.length-1])) && ((stack.length-1)!==-1)){
+                        output=output+(stack[stack.length-1])+' ';
+                        stack.pop();
+                    }
+                    
+                }
+                stack.push(chr);
+            }
 
             else{stack.push(chr);} 
         }
 
         if((stack.length-1)!==-1){
             while((stack.length-1)!==-1){
-                output=output+stack.pop();
+                output=output+stack.pop()+' ';
             }
         }
-
-
-
-        // for(let chr of exp){
-
-        //     if(!isNaN(chr)){output=output+chr;}
-
-        //     else
-        //     if(chr==='('){stack.push(chr);}
-
-        //     else
-        //     if(chr===')'){
-        //         while(stack[stack.length-1]!=='('){
-        //             output=output+stack.pop();
-        //         }
-        //         stack.pop();
-        //     }
-
-        //     else
-        //     if(precendence(chr)<=precendence(stack[stack.length-1]) && (stack.length-1)!==-1){
-        //         while(precendence(chr)<=precendence(stack[stack.length-1]) && (stack[stack.length-1])!==-1){
-        //             output=output+stack.pop();
-        //         }
-        //         stack.push(chr);
-        //     }
-
-        //     else{stack.push(chr);}
-        // }
-
-        //     if((stack.length-1)!==-1){
-        //         while((stack.length-1)!==-1){
-        //             output=output+stack.pop();
-        //         }
-        //     }
-        //return(output);
-
-        console.log(output);
-        console.log(stack,stack.length);
-
+        return(output);
         }
     
 
@@ -126,7 +94,7 @@ const Calculator = () => {
     const handleSubmit = (e) =>{
         e.preventDefault();
         let postfix=infixToPostfix(expression);
-        console.log(postfix);
+        console.log('Postfix : ',postfix);
     }
 
         return (
