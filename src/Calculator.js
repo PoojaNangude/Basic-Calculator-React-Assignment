@@ -8,6 +8,7 @@ const Calculator = () => {
     const [ans,setAns]=useState(0);
     let exp=0;
 
+    //function for evaluation according to the operator
     const evaluate =(num1,opr,num2)=>{
         switch(opr){
             case '+':
@@ -25,13 +26,11 @@ const Calculator = () => {
             case '*':
                 exp=parseFloat(num1)*parseFloat(num2);
                 break;
-
-            case '(':
-                break;
         }
         return(parseFloat(exp));
     }
 
+    //function to return precedence of operator
     const precendence = (x) =>{
         if(x==='('||x===')')
         return(0);
@@ -45,16 +44,28 @@ const Calculator = () => {
         return(3);
     }
 
+    //function to convert infix expression to postfix expression
     const infixToPostfix = (exp) =>{
 
-        let separators = ["+","-","/","*",")","("];
-        let splitexp=exp.split(new RegExp("([" + separators.join("") + "])+"));
-        console.log(splitexp);
+        let separators=['+','-','*','/','(',')',' '];
+        let expsplit=[];
+        let prev_ind=0;
+        for(let i=0;i<exp.length;i++){
+            if(separators.includes(exp[i])){
+                expsplit.push(exp.slice(prev_ind,i));
+                expsplit.push(exp[i]);
+                prev_ind=i+1;
+            }
+            else{
+                continue;
+            }
+        }
+
         let stack=[];
         let operators=['+','-','/','*'];
         let output='';
 
-        for(let chr of splitexp){
+        for(let chr of expsplit){
             if(!isNaN(chr)){output=output+chr+' ';}
 
             else
@@ -92,13 +103,36 @@ const Calculator = () => {
         }
         return(output);
         }
-    
 
+    // function to evaluate the value of the postfix expression
+    const evaluate_postfix = (expr) =>{
+        let post_stack=[];
+        for(let term of expr){
+            if(!isNaN(term)){
+                post_stack.push(term);
+            }
+            else{
+                let number2=post_stack.pop();
+                let number1=post_stack.pop();
+                let answer=evaluate(number1,term,number2);
+                post_stack.push(answer);
+            }
+        }
+        return(post_stack.pop());
+    }
 
+    //On pressing submit button after entering mathematical expression the handleSubmit function just calls the function to convert infix to postfix ans then the function to evaluate the postfix function
     const handleSubmit = (e) =>{
         e.preventDefault();
-        let postfix=infixToPostfix(expression);
-        console.log('Postfix : ',postfix);
+        let postfix=infixToPostfix(expression+' ');
+        let post=postfix.split(' ');
+        post=post.filter(function(x){
+            return(x!=="");
+        });
+        console.log(post);
+        let evaluated=evaluate_postfix(post);
+        console.log(evaluated);
+        setAns(evaluated);
     }
 
         return (
@@ -108,8 +142,12 @@ const Calculator = () => {
 
                     <div>
                         <label htmlFor="expression">Enter mathematical expression : </label>
-                        <input
-                        type="text"
+                    </div>
+                    <br></br>
+                    <div>
+                        <textarea
+                        rows="5"
+                        cols="30"
                         id="expression"
                         name="expression"
                         value={expression}
@@ -128,3 +166,6 @@ const Calculator = () => {
 }
 
 export default Calculator;
+
+//(24.3+23.23)/(5*3)+10/2*52-45
+//218.1686666666667
