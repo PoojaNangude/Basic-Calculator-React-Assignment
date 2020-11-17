@@ -32,16 +32,16 @@ const Calculator = () => {
 
     //function to return precedence of operator
     const precendence = (x) =>{
-        if(x==='('||x===')')
-        return(0);
+        if(x==='+'||x==='-'){
+            return(1);
+        }
         else
-        if(x==='+'||x==='-')
-        return(1);
-        else
-        if(x==='*'||x==='/')
-        return(2);
-        else
-        return(3);
+        if(x==='*'||x==='/'){
+            return(2);
+        }
+        else{
+            return(-1);
+        }
     }
 
     //function to convert infix expression to postfix expression
@@ -74,7 +74,6 @@ const Calculator = () => {
             else
             if(chr===')'){
                 while(stack[stack.length-1] !== '('){
-                    // console.log(stack[stack.length-1]);
                     output=output+(stack[stack.length-1])+' ';
                     stack.pop();
                 }
@@ -92,8 +91,7 @@ const Calculator = () => {
                 }
                 stack.push(chr);
             }
-
-            else{stack.push(chr);} 
+            // else{stack.push(chr);} 
         }
 
         if((stack.length-1)!==-1){
@@ -125,11 +123,11 @@ const Calculator = () => {
     const handleSubmit = (e) =>{
         e.preventDefault();
         let postfix=infixToPostfix(expression+' ');
+        console.log(postfix);
         let post=postfix.split(' ');
         post=post.filter(function(x){
             return(x!=="");
         });
-        console.log(post);
         let evaluated=evaluate_postfix(post);
         console.log(evaluated);
         setAns(evaluated);
@@ -169,3 +167,6 @@ export default Calculator;
 
 //(24.3+23.23)/(5*3)+10/2*52-45
 //218.1686666666667
+
+//(24.3+(86.9*23.23/2))/(5*3)+10/2*52-45
+//283.9095666666667
