@@ -1,10 +1,11 @@
-import { render } from '@testing-library/react';
+// import { render } from '@testing-library/react';
 import React, {useState,useEffect} from 'react';
 // In advanced bracket calculator 2
 // Can handle brackets
 const Calculator = () => {
 
     const [expression,setExpression]=useState('');
+    const [pstfix,setPstfix]=useState('');
     const [ans,setAns]=useState(0);
     let exp=0;
 
@@ -25,6 +26,9 @@ const Calculator = () => {
 
             case '*':
                 exp=parseFloat(num1)*parseFloat(num2);
+                break;
+
+            default:
                 break;
         }
         return(parseFloat(exp));
