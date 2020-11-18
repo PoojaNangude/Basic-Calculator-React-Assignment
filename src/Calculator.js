@@ -5,8 +5,9 @@ import React, {useState,useEffect} from 'react';
 const Calculator = () => {
 
     const [expression,setExpression]=useState('');
-    const [pstfix,setPstfix]=useState('');
+    //const [pstfix,setPstfix]=useState('');
     const [ans,setAns]=useState(0);
+    const [prev,setPrev]=useState([]);
     let exp=0;
 
     //function for evaluation according to the operator
@@ -137,6 +138,18 @@ const Calculator = () => {
         setAns(evaluated);
     }
 
+    useEffect(()=>{
+        const record={id:new Date().getTime().toString(), expression,ans};
+        console.log(record);
+        setPrev(()=>{
+            return [...prev,record];
+    });
+    },[ans]);
+
+    useEffect(()=>{
+        console.log('In useEffect');
+    },[prev]);
+
         return (
             <div>
                 <h1>Advanced Calculator</h1>
@@ -161,8 +174,16 @@ const Calculator = () => {
                     <button type="submit" onClick={handleSubmit}>Submit</button>
 
                     <h3>ANS: {ans}</h3>
-
                 </form>
+                {
+                    prev.map((record,index)=>{
+                        const {id,expression,ans}=record;
+                        return(
+                            <div key={id}>
+                                <h3>{expression} = {ans}</h3>
+                            </div> 
+                        );
+                    })}
             </div>
         );
 }
