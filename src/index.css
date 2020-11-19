@@ -26,3 +26,13 @@ textarea {
   overflow: auto;
   align-self: center;
 }
+
+i:hover {
+  background-color: rgb(255, 177, 177);
+  cursor: pointer;
+}
+
+b:hover {
+  background-color: rgb(255, 177, 177);
+  cursor: pointer;
+}

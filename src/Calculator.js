@@ -142,11 +142,17 @@ const Calculator = () => {
         console.log("Ans array",ansArray);
     }
 
-    const setInputArea = (record) => {
+    const setInputinArea = (record) => {
         console.log(record.id+' '+record.expression+' '+record.ans);
         setExpression(record.expression);
         setAns(0);
 
+    }
+
+    const setAnsinArea = (record) => {
+        console.log(record.id+' '+record.expression+' '+record.ans);
+        setExpression(record.ans);
+        setAns(0);
     }
 
     const clearCalculator = () =>{
@@ -197,11 +203,13 @@ const Calculator = () => {
                 <h3>History</h3>
                 <div className="myBox">
                 {
-                    prev.slice(0).reverse().map((record,index)=>{
+                    prev.slice().reverse().map((record,index)=>{
                         const {id,expression,ans}=record;
                         return(
                             <div key={id}>
-                                <h5 onClick={()=>setInputArea(record)}> {expression} = {ans}
+                                <h5 className="hover">
+                                    <b onClick={()=>setInputinArea(record)}>{expression}</b> = 
+                                    <i onClick={()=>setAnsinArea(record)}>{ans}</i>
                                 </h5> 
                             </div> 
                         );
