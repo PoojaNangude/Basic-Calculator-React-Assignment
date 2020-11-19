@@ -9,6 +9,7 @@ const Calculator = () => {
     const [ans,setAns]=useState(0);
     const [prev,setPrev]=useState([]);
     const [ansArray,setAnsArray]=useState([]);
+    const [firstRender,setFirstRender]=useState(true);
     let exp=0;
 
     //function for evaluation according to the operator
@@ -161,12 +162,18 @@ const Calculator = () => {
     }
 
     useEffect(()=>{
+        if(firstRender){
+            setFirstRender(false);
+        }
+        else{
         console.log('in useEffect');
         const record={id:new Date().getTime().toString(), expression,ans};
         console.log(record);
         setPrev(()=>{
             return [...prev,record];
     });
+        }
+
     },[ansArray]);
 
     useEffect(()=>{
