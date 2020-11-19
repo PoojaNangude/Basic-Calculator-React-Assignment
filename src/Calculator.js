@@ -187,18 +187,20 @@ const Calculator = () => {
 
                     <h3>ANS: {ans}</h3>
                 </form>
-                
+                <br></br>
+                <h3>History</h3>
+                <div className="myBox">
                 {
-                    prev.map((record,index)=>{
+                    prev.slice(0).reverse().map((record,index)=>{
                         const {id,expression,ans}=record;
                         return(
                             <div key={id}>
-                                <h3 onClick={()=>setInputArea(record)}>{expression}</h3> 
-                                <h3>= {ans}</h3>
+                                <h5 onClick={()=>setInputArea(record)}> {expression} = {ans}
+                                </h5> 
                             </div> 
                         );
                     })}
-                
+                </div>
             </div>
         );
 }
