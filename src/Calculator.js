@@ -1,6 +1,6 @@
 // import { render } from '@testing-library/react';
 import React, {useState,useEffect} from 'react';
-// In advanced bracket calculator 2
+// In guiadvbrac2 branch
 // Can handle brackets
 const Calculator = () => {
 
