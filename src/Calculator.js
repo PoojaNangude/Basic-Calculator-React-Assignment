@@ -149,6 +149,11 @@ const Calculator = () => {
 
     }
 
+    const clearCalculator = () =>{
+        setExpression('');
+        setAns(0);
+    }
+
     useEffect(()=>{
         console.log('in useEffect');
         const record={id:new Date().getTime().toString(), expression,ans};
@@ -184,6 +189,7 @@ const Calculator = () => {
                     <br></br>
 
                     <button type="submit" onClick={handleSubmit}>Submit</button>
+                    <button type="button" onClick={()=>clearCalculator()}>Clear</button>
 
                     <h3>ANS: {ans}</h3>
                 </form>
