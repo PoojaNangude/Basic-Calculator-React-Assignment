@@ -142,6 +142,13 @@ const Calculator = () => {
         console.log("Ans array",ansArray);
     }
 
+    const setInputArea = (record) => {
+        console.log(record.id+' '+record.expression+' '+record.ans);
+        setExpression(record.expression);
+        setAns(0);
+
+    }
+
     useEffect(()=>{
         console.log('in useEffect');
         const record={id:new Date().getTime().toString(), expression,ans};
@@ -180,15 +187,18 @@ const Calculator = () => {
 
                     <h3>ANS: {ans}</h3>
                 </form>
+                
                 {
                     prev.map((record,index)=>{
                         const {id,expression,ans}=record;
                         return(
                             <div key={id}>
-                                <h3>{expression} = {ans}</h3>
+                                <h3 onClick={()=>setInputArea(record)}>{expression}</h3> 
+                                <h3>= {ans}</h3>
                             </div> 
                         );
                     })}
+                
             </div>
         );
 }
