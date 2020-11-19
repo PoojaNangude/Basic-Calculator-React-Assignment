@@ -8,6 +8,7 @@ const Calculator = () => {
     //const [pstfix,setPstfix]=useState('');
     const [ans,setAns]=useState(0);
     const [prev,setPrev]=useState([]);
+    const [ansArray,setAnsArray]=useState([]);
     let exp=0;
 
     //function for evaluation according to the operator
@@ -136,15 +137,19 @@ const Calculator = () => {
         let evaluated=evaluate_postfix(post);
         console.log(evaluated);
         setAns(evaluated);
+
+        setAnsArray(ansArray.concat(evaluated));
+        console.log("Ans array",ansArray);
     }
 
     useEffect(()=>{
+        console.log('in useEffect');
         const record={id:new Date().getTime().toString(), expression,ans};
         console.log(record);
         setPrev(()=>{
             return [...prev,record];
     });
-    },[ans]);
+    },[ansArray]);
 
     useEffect(()=>{
         console.log('In useEffect');
