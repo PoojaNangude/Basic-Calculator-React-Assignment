@@ -161,6 +161,10 @@ const Calculator = () => {
         setAns(0);
     }
 
+    const clearHistory = () =>{
+        setPrev([]);
+    }
+
     useEffect(()=>{
         if(firstRender){
             setFirstRender(false);
@@ -172,7 +176,7 @@ const Calculator = () => {
         setPrev(()=>{
             return [...prev,record];
     });
-        }
+    }
 
     },[ansArray]);
 
@@ -208,6 +212,7 @@ const Calculator = () => {
                 </form>
                 <br></br>
                 <h3>History</h3>
+                <p align="left"><button type="button" onClick={clearHistory}>Clear History</button></p>
                 <div className="myBox">
                 {
                     prev.slice().reverse().map((record,index)=>{
